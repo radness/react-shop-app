@@ -1,7 +1,7 @@
 {
-  "name": "react-boiler-plate",
+  "name": "react-shop-app",
   "version": "1.0.0",
-  "description": "react boiler plate",
+  "description": "react shop app",
   "main": "index.js",
   "engine": {
     "node": "10.16.0",
@@ -13,7 +13,7 @@
     "frontend": "npm run start --prefix client",
     "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\""
   },
-  "author": "John ahn",
+  "author": "radness",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.6",
@@ -32,5 +32,9 @@
   "devDependencies": {
     "concurrently": "^4.1.0",
     "nodemon": "^1.19.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/radness/react-shop-app.git"
   }
 }
