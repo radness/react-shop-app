@@ -19,13 +19,23 @@ function FileUpload(props) {
         Axios.post('/api/product/uploadImage', formData, config)
             .then(response => {
                 if (response.data.success) {
-                    setImages([...response.data.image]);
+                    setImages([...Images, response.data.image]);
                     // 부모 경로에 update 해준다.
                     props.refreshFunction([...Images, response.data.image]);
                 } else {
                     alert('Failed to save the Image in Server.');
                 }
             })
+    }
+
+    const onDelete = (image) => {
+        const currentIndex = Images.indexOf(image);
+
+        let newImages = [...Images];
+        newImages.splice(currentIndex, 1);
+
+        setImages(newImages);
+        props.refreshFunction(newImages);
     }
 
     return (
@@ -49,7 +59,14 @@ function FileUpload(props) {
             </Dropzone>
 
             <div style={{ display: 'flex', width: '350px', height: '240px', overflowX: 'scroll' }}>
-
+                {Images.map((image, index) => (
+                    <div onClick={() => onDelete(image)}>
+                        <img style={{ minWidth: '300px', width: '300px', height: '240px' }}
+                            src={`http://localhost:5000/${image}`}
+                            alt={`productImg-${index}`}
+                        />
+                    </div>
+                ))}
             </div>
         </div>
     )
