@@ -18,6 +18,7 @@ function NavBar() {
   return (
     <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%' }}>
       <div className="menu__logo">
+        {/* <img scr="%PUBLIC_URL%/LogoIcon.jpg" /> */}
         <a href="/">Logo</a>
       </div>
       <div className="menu__container">

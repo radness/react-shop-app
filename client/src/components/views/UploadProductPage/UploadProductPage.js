@@ -69,6 +69,9 @@ function UploadProductPage(props) {
             })
     }
 
+    if (!TitleValue || !DescriptionValue || !PriceValue || !ContinentValue || !Images) {
+        alert('Fill the fields fitst!');
+    }
 
     return (
         <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
