@@ -8,20 +8,19 @@ const { Meta } = Card;
 function LandingPage() {
 
     const [Products, setProducts] = useState([]);
+    const [Skip, setSkip] = useState(0);
+    const [Limit, setLimit] = useState(8);
 
     useEffect(() => {
-        Axios.post('/api/product/getProducts')
-            .then(response => {
-                if (response.data.success) {
-                    setProducts(response.data.products);
 
-                    console.log(response.data.products);
+        const variables = {
+            skip: Skip,
+            limit: Limit,
+        }
 
-                } else {
-                    alert('Fail to fetch product datas.');
-                }
-            })
-    }, [])
+        getProducts(variables);
+
+    }, []);
 
     const renderCards = Products.map((product, index) => {
         return <Col lg={6} md={8} xs={24}>
@@ -37,6 +36,30 @@ function LandingPage() {
         </Col>
     })
 
+    // 자주 사용하는 함수를 빼기
+    const getProducts = (variables) => {
+        Axios.post('/api/product/getProducts', variables)
+            .then(response => {
+                if (response.data.success) {
+                    setProducts(response.data.products);
+                    // console.log(response.data.products);
+                } else {
+                    alert('Fail to fetch product datas.');
+                }
+            })
+    }
+
+    const onLoadMore = () => {
+        let skip = Skip + Limit;
+
+        const variables = {
+            skip: Skip,
+            limit: Limit,
+        }
+
+        getProducts(variables);
+
+    }
 
     return (
         <>
@@ -66,7 +89,7 @@ function LandingPage() {
             }
             <br></br>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <button>Load More</button>
+                <button onClick={onLoadMore}>Load More</button>
             </div>
         </>
     )
