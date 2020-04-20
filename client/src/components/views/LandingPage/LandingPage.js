@@ -10,6 +10,7 @@ function LandingPage() {
     const [Products, setProducts] = useState([]);
     const [Skip, setSkip] = useState(0);
     const [Limit, setLimit] = useState(8);
+    const [PostSize, setPostSize] = useState(0);
 
     useEffect(() => {
 
@@ -41,10 +42,14 @@ function LandingPage() {
         Axios.post('/api/product/getProducts', variables)
             .then(response => {
                 if (response.data.success) {
-                    setProducts(response.data.products);
-                    // console.log(response.data.products);
+                    if (variables.loadMore) {
+                        setProducts([...Products, ...response.data.products]);
+                    } else {
+                        setProducts(response.data.products);
+                    }
+                    // setPostSize(response.data.postSize)
                 } else {
-                    alert('Fail to fetch product datas.');
+                    alert('Failed to fectch product datas');
                 }
             })
     }
@@ -58,7 +63,7 @@ function LandingPage() {
         }
 
         getProducts(variables);
-
+        setSkip(skip);
     }
 
     return (
@@ -88,9 +93,13 @@ function LandingPage() {
                 </div>
             }
             <br></br>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <button onClick={onLoadMore}>Load More</button>
-            </div>
+
+            {PostSize >= Limit &&
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <button onClick={onLoadMore}>Load More</button>
+                </div>
+            }
+
         </>
     )
 }
