@@ -56,7 +56,7 @@ router.post("/uploadProduct", auth, (req, res) => {
 
 });
 
-router.post("/getProducts", auth, (req, res) => {
+router.post("/getProducts", (req, res) => {
 
     // mongo db에 조건 추가
     let order = req.body.order ? req.body.order : "desc";

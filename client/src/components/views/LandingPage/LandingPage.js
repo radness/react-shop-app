@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { Icon, Col, Card, Row } from 'antd';
 import ImageSlider from '../../utils/ImageSlider';
+import CheckBox from './Sections/CheckBox';
 
 const { Meta } = Card;
 
@@ -66,6 +67,10 @@ function LandingPage() {
         setSkip(skip);
     }
 
+    const handleFilters = (filters, category) => {
+
+    }
+
     return (
         <>
             <div stype={{ width: '75%', margin: '3rem auto' }}>
@@ -75,7 +80,9 @@ function LandingPage() {
             </div>
 
             {/* Filter */}
-
+            <CheckBox
+                handleFilters={filters => handleFilters(filters, "continents")}
+            />
             {/* Search */}
 
             {Products.length === 0 ?
