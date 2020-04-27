@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { Icon, Col, Card, Row } from 'antd';
 import ImageSlider from '../../utils/ImageSlider';
 import CheckBox from './Sections/CheckBox';
+import RadioBox from './Sections/RadioBox';
 
 const { Meta } = Card;
 
@@ -12,6 +13,11 @@ function LandingPage() {
     const [Skip, setSkip] = useState(0);
     const [Limit, setLimit] = useState(8);
     const [PostSize, setPostSize] = useState(0);
+    const [Filters, setFilters] = useState({
+        continent: [],
+        price: []
+    })
+
 
     useEffect(() => {
 
@@ -61,14 +67,37 @@ function LandingPage() {
         const variables = {
             skip: Skip,
             limit: Limit,
+            loadMore: true
         }
 
         getProducts(variables);
         setSkip(skip);
     }
 
-    const handleFilters = (filters, category) => {
+    const showFilterResults = (filters) => {
 
+        const variables = {
+            skip: 0,
+            limit: Limit,
+            filters: filters
+        }
+
+        getProducts(variables);
+        setSkip(0);
+    }
+
+    const handleFilters = (filters, category) => {
+        console.log(filters);
+        const newFilters = { ...Filters };
+
+        newFilters[category] = filters;
+
+        if (category === "price") {
+
+        }
+
+        showFilterResults(newFilters);
+        setFilters(newFilters);
     }
 
     return (
@@ -80,9 +109,19 @@ function LandingPage() {
             </div>
 
             {/* Filter */}
-            <CheckBox
-                handleFilters={filters => handleFilters(filters, "continents")}
-            />
+            <Row gutter={[16, 16]}>
+                <Col lg={12} xs={24} >
+                    <CheckBox
+                        handleFilters={filters => handleFilters(filters, "continents")}
+                    />
+                </Col>
+                <Col lg={12} xs={24} >
+                    <RadioBox
+                        handleFilters={filters => handleFilters(filters, "continents")}
+                    />
+                </Col>
+            </Row>
+
             {/* Search */}
 
             {Products.length === 0 ?

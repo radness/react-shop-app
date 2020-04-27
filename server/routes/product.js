@@ -64,6 +64,25 @@ router.post("/getProducts", (req, res) => {
     let limit = req.body.limit ? req.body.limit : 100;
     let skip = parseInt(req.body.skip);
 
+    let findArgs = {};
+
+    console.log(req.body.filters);
+
+    for (let key in req.body.filters) {
+        console.log(key);
+
+        if (req.body.filters[key].length > 0) {
+            if (key === "price") {
+
+            } else {
+                findArgs[key] = req.body.filters[key];
+                // console.log(req.body.filters[key]);
+                // findArgs['continents'] = [1, 7, 4, 5];
+                console.log(findArgs);
+            }
+        }
+    }
+
     Product.find()
         .populate("writer")
         .sort([[sortBy, order]])
